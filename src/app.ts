@@ -3,8 +3,11 @@ import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
 import { indexRoutes, profileRoutes } from './routes';
 import { onDailyInsertData, onStartIntervalOnDailyInsertData } from './controllers/supabaseController';
+import { isOnVercelEnv } from './utils/healper';
 
-onDailyInsertData();
+if (isOnVercelEnv()) {
+    onDailyInsertData();
+}
 onStartIntervalOnDailyInsertData();
 
 const app = express();
