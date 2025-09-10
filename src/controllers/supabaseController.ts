@@ -1,5 +1,4 @@
-import { supabase } from "../../supabase/client"
-import config from "../config/config";
+import { supabase, SUPABASE_DB_APP_KEY } from "../../supabase/client"
 import { App } from "../models";
 
 const testSupabaseConnection = async () => {
@@ -10,7 +9,7 @@ const testSupabaseConnection = async () => {
         if (error) throw error;
         const result: App = data
         const currentDateTime: string = new Date().toLocaleDateString() + new Date().toLocaleTimeString();
-        console.log(`Supabase connection status: ${result.id == config.supabseDBAppKey}, ${currentDateTime}`);
+        console.log(`Supabase connection status: ${result.id == SUPABASE_DB_APP_KEY}, ${currentDateTime}`);
     } catch (e) {
         console.error("Supabase connection test error:", e);
     }

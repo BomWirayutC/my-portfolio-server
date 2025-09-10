@@ -2,8 +2,9 @@ import express, { Request, Response } from 'express';
 import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
 import { indexRoutes, itemRoutes } from './routes';
-import { onStartIntervalTestSupabaseConnection } from './controllers/supabaseController';
+import { testSupabaseConnection, onStartIntervalTestSupabaseConnection } from './controllers/supabaseController';
 
+testSupabaseConnection();
 onStartIntervalTestSupabaseConnection();
 
 const app = express();
