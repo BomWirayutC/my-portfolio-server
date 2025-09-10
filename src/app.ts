@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
 import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
-import { indexRoutes, itemRoutes } from './routes';
+import { indexRoutes, profileRoutes } from './routes';
 import { testSupabaseConnection, onStartIntervalTestSupabaseConnection } from './controllers/supabaseController';
 
-testSupabaseConnection();
+// testSupabaseConnection();
 onStartIntervalTestSupabaseConnection();
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use('/', indexRoutes);
-app.use('/api', itemRoutes);
+app.use('/api', profileRoutes);
 
 // Global error handler (should be after routes)
 app.use(errorHandler);

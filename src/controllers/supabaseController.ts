@@ -8,7 +8,7 @@ const testSupabaseConnection = async () => {
             .select().single();
         if (error) throw error;
         const result: App = data
-        const currentDateTime: string = new Date().toLocaleDateString() + new Date().toLocaleTimeString();
+        const currentDateTime: string = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
         console.log(`Supabase connection status: ${result.id == SUPABASE_DB_APP_KEY}, ${currentDateTime}`);
     } catch (e) {
         console.error("Supabase connection test error:", e);
