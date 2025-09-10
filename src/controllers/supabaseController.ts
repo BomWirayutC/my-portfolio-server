@@ -1,23 +1,30 @@
-import { supabase, SUPABASE_DB_APP_KEY } from "../../supabase/client"
-import { App } from "../models";
+import { supabase } from "../../supabase/client"
 
-const testSupabaseConnection = async () => {
+const subjects = ["Cat", "Dog", "Developer", "AI"];
+const actions = ["runs", "jumps", "codes", "learns"];
+const places = ["in the park", "at home", "at work", "online"];
+
+const getRandomMessage = () => {
+    const s = subjects[Math.floor(Math.random() * subjects.length)];
+    const a = actions[Math.floor(Math.random() * actions.length)];
+    const p = places[Math.floor(Math.random() * places.length)];
+    return `${s} ${a} ${p}.`;
+}
+
+const onDailyInsertData = async () => {
     try {
-        const { data, error } = await supabase
-            .from('app')
-            .select().single();
+        const { error } = await supabase
+            .from('app_health')
+            .insert({ message: getRandomMessage() });
         if (error) throw error;
-        const result: App = data
-        const currentDateTime: string = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
-        console.log(`Supabase connection status: ${result.id == SUPABASE_DB_APP_KEY}, ${currentDateTime}`);
     } catch (e) {
         console.error("Supabase connection test error:", e);
     }
 }
 
-const onStartIntervalTestSupabaseConnection = () => setInterval(testSupabaseConnection, 24 * 60 * 60 * 1000); // Test every 24 hours
+const onStartIntervalOnDailyInsertData = () => setInterval(onDailyInsertData, 24 * 60 * 60 * 1000); // Insert every 24 hours
 
 export {
-    testSupabaseConnection,
-    onStartIntervalTestSupabaseConnection,
+    onDailyInsertData,
+    onStartIntervalOnDailyInsertData,
 }
