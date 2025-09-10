@@ -1,20 +1,18 @@
 import express, { Request, Response } from 'express';
-import itemRoutes from './routes/itemRoutes';
 import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
+import { indexRoutes, itemRoutes } from './routes';
+import { onStartIntervalTestSupabaseConnection } from './controllers/supabaseController';
+
+onStartIntervalTestSupabaseConnection();
 
 const app = express();
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use(express.static(path.join(__dirname, "public")));
-app.get("/", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "components", "index.html"));
-});
-app.get('/about', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "components", "about.html"));
-});
+app.use('/', indexRoutes);
 app.use('/api', itemRoutes);
 
 // Global error handler (should be after routes)

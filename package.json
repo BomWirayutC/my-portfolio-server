@@ -1,7 +1,7 @@
 {
-  "name": "ts-node-express",
+  "name": "my-portfolio-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "My Portfolio Server(Node, Express, Typescript)",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -10,17 +10,6 @@
     "lint": "eslint 'src/**/*.ts'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/c99rahul/ts-node-express.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/c99rahul/ts-node-express/issues"
-  },
-  "homepage": "https://github.com/c99rahul/ts-node-express#readme",
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^22.18.0",
@@ -35,6 +24,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
     "path": "^0.12.7"
   }
 }
