@@ -13,4 +13,5 @@ export default interface Profile {
     resume_url: string | null;
     title: string;
     updated_at: string;
+    cover_image: string;
 }
