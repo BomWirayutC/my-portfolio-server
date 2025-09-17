@@ -5,5 +5,11 @@
             "source": "/(.*)",
             "destination": "/api"
         }
+    ],
+    "crons": [
+        {
+            "path": "/daily_app_health",
+            "schedule": "0 2 * * *"
+        }
     ]
 }

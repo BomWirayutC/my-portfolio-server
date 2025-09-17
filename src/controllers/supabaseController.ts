@@ -22,9 +22,6 @@ const onDailyInsertData = async () => {
     }
 }
 
-const onStartIntervalOnDailyInsertData = () => setInterval(onDailyInsertData, 24 * 60 * 60 * 1000); // Insert every 24 hours
-
 export {
     onDailyInsertData,
-    onStartIntervalOnDailyInsertData,
 }
