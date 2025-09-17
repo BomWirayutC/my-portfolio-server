@@ -8,7 +8,7 @@
     ],
     "crons": [
         {
-            "path": "/daily_app_health",
+            "path": "/daily_app_health?secret=UrIQl5X4bYyIl6R9Per537DjymdFH6egjjxZXx1VQlYUo6RsKcswpBIpyH9gamfH",
             "schedule": "0 2 * * *"
         }
     ]

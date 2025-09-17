@@ -11,8 +11,7 @@ router.get('/about', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, "..", "components", "about.html"));
 });
 router.all("/daily_app_health", async (req: Request, res: Response) => {
-    const incoming = req.headers["x-cron-secret"];
-    if (incoming !== process.env.CRON_SECRET) {
+    if (req.query.secret !== process.env.CRON_SECRET) {
         return res.status(401).json({ "status": "false", "message": "unauthorized" });
     }
     try {
