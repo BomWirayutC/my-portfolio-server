@@ -9,10 +9,7 @@
     "crons": [
         {
             "path": "/daily_app_health",
-            "schedule": "0 2 * * *",
-            "headers": {
-                "x-cron-secret": "@cron_secret"
-            }
+            "schedule": "0 2 * * *"
         }
     ]
 }
