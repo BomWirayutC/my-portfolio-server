@@ -1,11 +1,15 @@
 import indexRoutes from "./indexRoutes";
 import itemRoutes from "./itemRoutes";
 import profileRoutes from "./profileRoutes";
-import SkillsRoutes from "./skillsRoutes";
+import skillsRoutes from "./skillsRoutes";
+import certificateRoutes from "./certificateRoutes";
+import fileRoutes from "./fileRoutes";
 
 export {
     indexRoutes,
     itemRoutes,
     profileRoutes,
-    SkillsRoutes,
+    skillsRoutes,
+    certificateRoutes,
+    fileRoutes,
 }

@@ -1,4 +1,5 @@
 import { supabase } from "../../supabase/client"
+import { AppHealths } from "../models/app_health";
 
 const subjects = ["Cat", "Dog", "Developer", "AI"];
 const actions = ["runs", "jumps", "codes", "learns"];
@@ -22,6 +23,26 @@ const onDailyInsertData = async () => {
     }
 }
 
+const onClearData = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('app_health')
+            .select("*");
+        if (error) throw error;
+        const result: AppHealths = data;
+        result.forEach(async (item) => {
+            const { error } = await supabase
+                .from('app_health')
+                .delete()
+                .eq('id', item.id);
+            if (error) console.error("Supabase clear app_health error:", error);
+        });
+    } catch (e) {
+        console.error("Supabase clear app_health error:", e);
+    }
+}
+
 export {
     onDailyInsertData,
+    onClearData,
 }

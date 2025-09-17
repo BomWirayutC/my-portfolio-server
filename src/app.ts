@@ -2,7 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
-import { indexRoutes, profileRoutes, SkillsRoutes } from './routes';
+import {
+    indexRoutes,
+    profileRoutes,
+    skillsRoutes,
+    certificateRoutes,
+    fileRoutes,
+} from './routes';
 
 const app = express();
 
@@ -12,8 +18,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use('/', indexRoutes);
-app.use('/api', profileRoutes);
-app.use('/api', SkillsRoutes);
+[profileRoutes, skillsRoutes, certificateRoutes, fileRoutes].forEach(route => {
+    app.use('/api', route);
+});
 
 // Global error handler (should be after routes)
 app.use(errorHandler);
