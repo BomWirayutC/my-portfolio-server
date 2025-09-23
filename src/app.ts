@@ -8,6 +8,7 @@ import {
     skillsRoutes,
     certificateRoutes,
     fileRoutes,
+    projectRoutes,
 } from './routes';
 
 const app = express();
@@ -18,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use('/', indexRoutes);
-[profileRoutes, skillsRoutes, certificateRoutes, fileRoutes].forEach(route => {
+[profileRoutes, skillsRoutes, certificateRoutes, fileRoutes, projectRoutes].forEach(route => {
     app.use('/api', route);
 });
 
