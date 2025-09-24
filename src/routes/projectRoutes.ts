@@ -2,15 +2,15 @@ import { Router } from 'express';
 import {
     getProjects,
     addProject,
-    deleteProject,
-    updateProject,
+    deleteProjectById,
+    updateProjectById,
 } from '../controllers/projectController';
 
 const router = Router();
 
 router.get('/getProjects', getProjects);
 router.post('/addProject', addProject);
-router.post('/deleteProject', deleteProject);
-router.post('/updateProject', updateProject);
+router.post('/deleteProjectById', deleteProjectById);
+router.post('/updateProjectById', updateProjectById);
 
 export default router;

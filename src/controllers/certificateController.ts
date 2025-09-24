@@ -56,7 +56,7 @@ export const addCertificate = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const deleteCertificate = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteCertificateById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         if (id) {
@@ -86,7 +86,7 @@ export const deleteCertificate = async (req: Request, res: Response, next: NextF
     }
 };
 
-export const updateCertificate = async (req: Request, res: Response, next: NextFunction) => {
+export const updateCertificateById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         if (id) {

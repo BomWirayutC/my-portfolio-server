@@ -1,16 +1,16 @@
 import { Router } from 'express';
 import {
     getSkills,
-    updateSkill,
+    updateSkillById,
     addSkill,
-    deleteSkill,
+    deleteSkillById,
 } from '../controllers/skillsController';
 
 const router = Router();
 
 router.get('/getSkills', getSkills);
-router.post('/updateSkill', updateSkill);
+router.post('/updateSkillById', updateSkillById);
 router.post('/addSkill', addSkill);
-router.post('/deleteSkill', deleteSkill);
+router.post('/deleteSkillById', deleteSkillById);
 
 export default router;

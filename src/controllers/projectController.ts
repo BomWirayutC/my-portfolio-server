@@ -55,7 +55,7 @@ export const addProject = async (req: Request, res: Response, next: NextFunction
     }
 };
 
-export const deleteProject = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteProjectById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         if (id) {
@@ -85,7 +85,7 @@ export const deleteProject = async (req: Request, res: Response, next: NextFunct
     }
 };
 
-export const updateProject = async (req: Request, res: Response, next: NextFunction) => {
+export const updateProjectById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         if (id) {
@@ -99,6 +99,7 @@ export const updateProject = async (req: Request, res: Response, next: NextFunct
                     technologies: requestBody.technologies,
                     demo_url: requestBody.demo_url || null,
                     github_url: requestBody.github_url || null,
+                    updated_at: new Date().toISOString(),
                 })
                 .eq('id', id);
             if (!error) {

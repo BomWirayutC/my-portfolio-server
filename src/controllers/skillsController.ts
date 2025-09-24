@@ -25,7 +25,7 @@ export const getSkills = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
-export const updateSkill = async (req: Request, res: Response, next: NextFunction) => {
+export const updateSkillById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         if (id) {
@@ -37,6 +37,7 @@ export const updateSkill = async (req: Request, res: Response, next: NextFunctio
                     level: requestBody.level,
                     icon: requestBody.icon || null,
                     display_order: requestBody.display_order || 0,
+                    updated_at: new Date().toISOString(),
                 })
                 .eq('id', id);
             if (!error) {
@@ -88,7 +89,7 @@ export const addSkill = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
-export const deleteSkill = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteSkillById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         if (id) {
