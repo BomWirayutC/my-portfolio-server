@@ -13,39 +13,37 @@ const upload = multer({
 const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
     upload.single("file")(req, res, async (err) => {
         try {
-            if (await isAuthorized(req, res, next)) {
-                if (!req.file || err) return res.status(400).json({ "status": 400, "message": "No file" });
-                const file = req.file;
-                const { fileName, bucket } = req.body;
-                // bucket: avatars, covers and projects
-                if (!bucket) return res.status(500).json({ "status": 500, "message": "Bucket required" });
-                const fileExt = file.originalname.split('.').pop();
-                const uniqueFileName = fileName || `${Date.now()}.${fileExt}`;
-                const token = getAuthorizeToken(req);
-                const userScoped = createClient(SUPABASE_DB_URL, SUPABASE_DB_KEY, {
-                    global: { headers: { Authorization: `Bearer ${token}` } }
-                });
-                const { error: uploadError } = await userScoped.storage
-                    .from(bucket)
-                    .upload(
-                        uniqueFileName,
-                        file.buffer,
-                        { contentType: file.mimetype }
-                    );
-                if (uploadError) return res.status(500).json({ "status": 500, "message": `Upload error: ${uploadError}` });
-                const { data: publicUrl } = supabase.storage
-                    .from(bucket)
-                    .getPublicUrl(uniqueFileName);
-                res.json({
-                    "status": 200,
-                    "message": "Success",
-                    "data": {
-                        "fileUrl": publicUrl.publicUrl,
-                        "bucket": bucket,
-                        "fileName": uniqueFileName,
-                    },
-                });
-            }
+            if (!req.file || err) return res.status(400).json({ "status": 400, "message": "No file" });
+            const file = req.file;
+            const { fileName, bucket } = req.body;
+            // bucket: avatars, covers and projects
+            if (!bucket) return res.status(500).json({ "status": 500, "message": "Bucket required" });
+            const fileExt = file.originalname.split('.').pop();
+            const uniqueFileName = fileName || `${Date.now()}.${fileExt}`;
+            const token = getAuthorizeToken(req);
+            const userScoped = createClient(SUPABASE_DB_URL, SUPABASE_DB_KEY, {
+                global: { headers: { Authorization: `Bearer ${token}` } }
+            });
+            const { error: uploadError } = await userScoped.storage
+                .from(bucket)
+                .upload(
+                    uniqueFileName,
+                    file.buffer,
+                    { contentType: file.mimetype }
+                );
+            if (uploadError) return res.status(500).json({ "status": 500, "message": `Upload error: ${uploadError}` });
+            const { data: publicUrl } = supabase.storage
+                .from(bucket)
+                .getPublicUrl(uniqueFileName);
+            res.json({
+                "status": 200,
+                "message": "Success",
+                "data": {
+                    "fileUrl": publicUrl.publicUrl,
+                    "bucket": bucket,
+                    "fileName": uniqueFileName,
+                },
+            });
         } catch (error) {
             console.log(`Upload image error: ${err}`);
             next(error);
