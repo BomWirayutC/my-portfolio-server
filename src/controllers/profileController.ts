@@ -6,7 +6,9 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
     try {
         const { data, error } = await supabase
             .from('about_me')
-            .select().single();
+            .select("*")
+            .limit(1)
+            .maybeSingle();
         if (!error) {
             const result: Profile = data;
             res.json({

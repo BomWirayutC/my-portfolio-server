@@ -29,6 +29,9 @@ export const getCertificates = async (req: Request, res: Response, next: NextFun
 export const addCertificate = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const requestBody: Certificate = req.body;
+        const { count } = await supabase
+            .from("certificates")
+            .select("*", { count: "exact", head: true });
         const { error } = await supabase
             .from('certificates')
             .insert([{
@@ -38,7 +41,7 @@ export const addCertificate = async (req: Request, res: Response, next: NextFunc
                 certificate_url: requestBody.certificate_url || null,
                 issue_date: requestBody.issue_date || null,
                 description: requestBody.description || null,
-                display_order: requestBody.display_order || 0,
+                display_order: (count || 0) + 1,
             }]);
         if (!error) {
             res.json({
@@ -125,3 +128,36 @@ export const updateCertificateById = async (req: Request, res: Response, next: N
         next(error);
     }
 }
+
+export const updateCertificateDisplayOrder = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const requestBody: Certificates = req.body;
+        if (requestBody && requestBody.length > 0) {
+            const updates = requestBody.map((cert, index) =>
+                supabase
+                    .from('certificates')
+                    .update({ display_order: index })
+                    .eq('id', cert.id)
+            );
+            const result = await Promise.all(updates);
+            if (result.every(r => !r.error)) {
+                res.json({
+                    "status": 200,
+                    "message": "Success",
+                });
+            } else {
+                res.status(500).json({
+                    "status": 500,
+                    "message": `Error: ${result.find(r => r.error)?.error?.message}`,
+                });
+            }
+        } else {
+            res.status(500).json({
+                "status": 500,
+                "message": "Body is required",
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
