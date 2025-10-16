@@ -8,11 +8,12 @@ import {
 } from '../controllers/certificateController';
 
 const router = Router();
+const prefix: string = "/certificate";
 
-router.get('/getCertificates', getCertificates);
-router.post('/addCertificate', addCertificate);
-router.post('/deleteCertificateById', deleteCertificateById);
-router.post('/updateCertificateById', updateCertificateById);
-router.post('/updateCertificateDisplayOrder', updateCertificateDisplayOrder);
+router.get(`${prefix}/getCertificates`, getCertificates);
+router.post(`${prefix}/addCertificate`, addCertificate);
+router.post(`${prefix}/deleteCertificateById`, deleteCertificateById);
+router.post(`${prefix}/updateCertificateById`, updateCertificateById);
+router.post(`${prefix}/updateCertificateDisplayOrder`, updateCertificateDisplayOrder);
 
 export default router;

@@ -5,8 +5,9 @@ import {
 } from '../controllers/profileController';
 
 const router = Router();
+const prefix: string = "/profile";
 
-router.get('/getProfile', getProfile);
-router.post('/updateProfile', updateProfile);
+router.get(`${prefix}/getProfile`, getProfile);
+router.post(`${prefix}/updateProfile`, updateProfile);
 
 export default router;

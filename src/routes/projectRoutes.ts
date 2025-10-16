@@ -8,11 +8,12 @@ import {
 } from '../controllers/projectController';
 
 const router = Router();
+const prefix: string = "/project";
 
-router.get('/getProjects', getProjects);
-router.post('/addProject', addProject);
-router.post('/deleteProjectById', deleteProjectById);
-router.post('/updateProjectById', updateProjectById);
-router.post('/updateProjectDisplayOrder', updateProjectDisplayOrder);
+router.get(`${prefix}/getProjects`, getProjects);
+router.post(`${prefix}/addProject`, addProject);
+router.post(`${prefix}/deleteProjectById`, deleteProjectById);
+router.post(`${prefix}/updateProjectById`, updateProjectById);
+router.post(`${prefix}/updateProjectDisplayOrder`, updateProjectDisplayOrder);
 
 export default router;
