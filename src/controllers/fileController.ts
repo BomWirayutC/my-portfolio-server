@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import { supabase, SUPABASE_DB_KEY, SUPABASE_DB_URL } from "../../supabase/client"
-import { isAuthorized } from './authorizeController';
 import { createClient } from '@supabase/supabase-js';
-import { getAuthorizeToken } from '../utils/healper';
+import { getAuthorizeToken, uint8ToBase64 } from '../utils/healper';
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -32,6 +31,7 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
                     { contentType: file.mimetype }
                 );
             if (uploadError) return res.status(500).json({ "status": 500, "message": `Upload error: ${uploadError}` });
+            const filePreview = fileExt?.toLocaleLowerCase() === 'pdf' ? await createBase64ImagePreviewFromPdfFile(file) : null;
             const { data: publicUrl } = supabase.storage
                 .from(bucket)
                 .getPublicUrl(uniqueFileName);
@@ -42,6 +42,7 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
                     "fileUrl": publicUrl.publicUrl,
                     "bucket": bucket,
                     "fileName": uniqueFileName,
+                    "filePreview": filePreview,
                 },
             });
         } catch (error) {
@@ -51,4 +52,23 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
     })
 }
 
-export { uploadFile };
+const createBase64ImagePreviewFromPdfFile = async (pdfFile: Express.Multer.File): Promise<string> => {
+    const mupdf = await import('mupdf');
+
+    const arrayBuffer = pdfFile.buffer
+    const doc = mupdf.PDFDocument.openDocument(arrayBuffer, "application/pdf");
+
+    const page = doc.loadPage(0);
+    const dpi = 200;
+    const scale = dpi / 72;
+    const pixmap = page.toPixmap(
+        mupdf.Matrix.scale(scale, scale),
+        mupdf.ColorSpace.DeviceRGB,
+        false,
+        true
+    );
+    const pngBytes = pixmap.asPNG();
+    return `data:image/png;base64,${uint8ToBase64(pngBytes)}`;
+}
+
+export { uploadFile, createBase64ImagePreviewFromPdfFile };

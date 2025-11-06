@@ -42,6 +42,7 @@ export const addCertificate = async (req: Request, res: Response, next: NextFunc
                 issue_date: requestBody.issue_date || null,
                 description: requestBody.description || null,
                 display_order: (count || 0) + 1,
+                certificate_image_preview: requestBody.certificate_image_preview || null,
             }]);
         if (!error) {
             res.json({
@@ -105,6 +106,7 @@ export const updateCertificateById = async (req: Request, res: Response, next: N
                     description: requestBody.description || null,
                     display_order: requestBody.display_order || 0,
                     updated_at: new Date().toISOString(),
+                    certificate_image_preview: requestBody.certificate_image_preview || null,
                 })
                 .eq('id', id);
             if (!error) {

@@ -1,5 +1,6 @@
 export interface Certificate {
     certificate_url?: string | null
+    certificate_image_preview?: string | null
     created_at?: string
     description?: string | null
     display_order?: number | null
